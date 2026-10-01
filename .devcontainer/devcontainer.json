@@ -1,6 +1,6 @@
 {
   "name": "Laboratorio Java — ventana en el navegador",
-  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "build": {"dockerfile": "Dockerfile", "context": "."},
   "features": {
     "ghcr.io/devcontainers/features/desktop-lite:1.2.10": {
       "noVncVersion": "1.6.0",

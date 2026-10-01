@@ -16,7 +16,8 @@ class ConfigTests(unittest.TestCase):
 
     def test_devcontainer_starts_java_automatically(self):
         config = self.read(".devcontainer/devcontainer.json")
-        self.assertIn("21", config["image"])
+        self.assertEqual(config["build"]["dockerfile"], "Dockerfile")
+        self.assertIn("java:1-21-bookworm@sha256:", (ROOT / ".devcontainer/Dockerfile").read_text())
         self.assertEqual(config["postStartCommand"], ["python3", ".devcontainer/start.py", "start"])
         self.assertEqual(config["forwardPorts"], [6080])
         self.assertEqual(config["portsAttributes"]["6080"]["onAutoForward"], "openBrowser")

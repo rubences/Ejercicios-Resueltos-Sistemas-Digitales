@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Laboratorio: compilar",
+      "type": "process",
+      "command": "java",
+      "args": ["-Dfile.encoding=UTF-8", "Build.java", "package"],
+      "options": {"cwd": "${workspaceFolder}/laboratorio-java"},
+      "group": {"kind": "build", "isDefault": true},
+      "problemMatcher": [],
+      "presentation": {"reveal": "silent", "panel": "dedicated", "clear": true}
+    },
+    {
+      "label": "Laboratorio: ejecutar sin depurador",
+      "type": "process",
+      "command": "java",
+      "args": ["-Dfile.encoding=UTF-8", "Build.java", "run"],
+      "options": {"cwd": "${workspaceFolder}/laboratorio-java"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Laboratorio: pruebas",
+      "type": "process",
+      "command": "java",
+      "args": ["-Dfile.encoding=UTF-8", "Build.java", "test"],
+      "options": {"cwd": "${workspaceFolder}/laboratorio-java"},
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Codespaces: reabrir laboratorio",
+      "type": "process",
+      "command": "python3",
+      "args": ["${workspaceFolder}/.devcontainer/start.py", "start"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Codespaces: cerrar laboratorio",
+      "type": "process",
+      "command": "python3",
+      "args": ["${workspaceFolder}/.devcontainer/start.py", "stop"],
+      "problemMatcher": []
+    }
+  ]
+}

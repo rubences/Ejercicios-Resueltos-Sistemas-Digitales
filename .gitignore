@@ -2,3 +2,7 @@ laboratorio-java/build/
 laboratorio-java/dist/
 *.class
 .DS_Store
+
+# Cachés del lanzador y pruebas Python
+__pycache__/
+*.pyc

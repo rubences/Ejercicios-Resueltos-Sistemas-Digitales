@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Laboratorio Java — abrir ventana (F5)",
+      "request": "launch",
+      "mainClass": "lab.App",
+      "classPaths": ["${workspaceFolder}/laboratorio-java/build/classes"],
+      "sourcePaths": ["${workspaceFolder}/laboratorio-java/src"],
+      "cwd": "${workspaceFolder}/laboratorio-java",
+      "preLaunchTask": "Laboratorio: compilar",
+      "console": "integratedTerminal",
+      "encoding": "UTF-8",
+      "vmArgs": ["-Xmx768m", "-Dfile.encoding=UTF-8"],
+      "shortenCommandLine": "none"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "java.project.sourcePaths": ["laboratorio-java/src", "laboratorio-java/test"],
+  "java.project.outputPath": "laboratorio-java/build/vscode-classes",
+  "java.project.referencedLibraries": [],
+  "java.debug.settings.forceBuildBeforeLaunch": false,
+  "files.encoding": "utf8"
+}

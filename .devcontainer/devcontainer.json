@@ -1,0 +1,25 @@
+{
+  "name": "Laboratorio Java — ventana en el navegador",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1.2.10": {
+      "noVncVersion": "1.6.0",
+      "password": "noPassword",
+      "webPort": "6080",
+      "vncPort": "5901"
+    }
+  },
+  "remoteUser": "vscode",
+  "containerEnv": {"VNC_RESOLUTION": "1440x1000x24"},
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": {"label": "Abrir laboratorio Java", "onAutoForward": "openBrowser"}
+  },
+  "otherPortsAttributes": {"onAutoForward": "ignore"},
+  "postStartCommand": ["python3", ".devcontainer/start.py", "start"],
+  "postAttachCommand": ["python3", ".devcontainer/start.py", "url"],
+  "customizations": {
+    "vscode": {"extensions": ["vscjava.vscode-java-pack"]},
+    "codespaces": {"openFiles": ["docs/ARRANQUE_DIRECTO.md"]}
+  }
+}

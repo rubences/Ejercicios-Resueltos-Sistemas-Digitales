@@ -25,7 +25,7 @@ jobs:
           distribution: temurin
           java-version: '17'
       - name: Verify originals
-        run: sha256sum -c laboratorio-java/docs/originales-sha256.txt
+        run: tr -d '\r' < laboratorio-java/docs/originales-sha256.txt | sha256sum -c -
       - name: Compile and test
         working-directory: laboratorio-java
         run: |

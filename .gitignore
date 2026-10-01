@@ -1,0 +1,4 @@
+laboratorio-java/build/
+laboratorio-java/dist/
+*.class
+.DS_Store

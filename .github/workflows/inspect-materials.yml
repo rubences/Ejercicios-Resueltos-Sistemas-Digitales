@@ -1,0 +1,46 @@
+name: Inspect teaching materials
+on:
+  push:
+    branches: [feat/laboratorio-java-visual]
+    paths: [.github/workflows/inspect-materials.yml]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Read original repository
+        run: git clone --depth 1 --branch main https://github.com/rubences/Ejercicios-Resueltos-Sistemas-Digitales.git originals
+      - name: Inventory archives and extract text
+        run: |
+          mkdir -p inspection
+          python3 - <<'PY'
+          import pathlib, zipfile, subprocess, json, shutil
+          root = pathlib.Path('originals')
+          out = pathlib.Path('inspection')
+          report = []
+          for archive in sorted(root.rglob('*.zip')):
+              report.append('\nARCHIVE: ' + str(archive))
+              with zipfile.ZipFile(archive) as z:
+                  report.extend(f'{i.filename} ({i.file_size} bytes)' for i in z.infolist())
+                  for i in z.infolist():
+                      p = pathlib.PurePosixPath(i.filename)
+                      if p.suffix.lower() in {'.java','.txt','.md','.csv','.xml','.properties','.ino','.cpp','.h','.pde'} and i.file_size < 200000 and not any(x in p.parts for x in ['__MACOSX','javadoc','target','build']):
+                          report.append('\nFILE: ' + i.filename + '\n' + z.read(i).decode('utf-8', errors='replace'))
+          for p in sorted(root.rglob('*.pdf')):
+              text = subprocess.check_output(['pdftotext','-layout',str(p),'-']).decode('utf-8')
+              report.append('\nPDF: ' + str(p) + '\n' + text)
+              shutil.copy(p, out / p.name)
+              subprocess.run(['pdftoppm','-scale-to','1600','-png',str(p),str(out/p.stem)],check=True)
+          (out/'materials.txt').write_text('\n'.join(report),encoding='utf-8')
+          print('\n'.join(report))
+          shutil.copytree(root/'Tema1', out/'Tema1')
+          shutil.copytree(root/'Tema2', out/'Tema2')
+          PY
+      - name: Preserve inspection artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-materials-inspection
+          path: inspection/
+          retention-days: 7

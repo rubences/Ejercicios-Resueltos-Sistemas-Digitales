@@ -12,11 +12,13 @@ jobs:
     steps:
       - name: Read original repository
         run: git clone --depth 1 --branch main https://github.com/rubences/Ejercicios-Resueltos-Sistemas-Digitales.git originals
+      - name: Install PDF tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
       - name: Inventory archives and extract text
         run: |
           mkdir -p inspection
           python3 - <<'PY'
-          import pathlib, zipfile, subprocess, json, shutil
+          import pathlib, zipfile, subprocess, shutil
           root = pathlib.Path('originals')
           out = pathlib.Path('inspection')
           report = []
@@ -26,7 +28,7 @@ jobs:
                   report.extend(f'{i.filename} ({i.file_size} bytes)' for i in z.infolist())
                   for i in z.infolist():
                       p = pathlib.PurePosixPath(i.filename)
-                      if p.suffix.lower() in {'.java','.txt','.md','.csv','.xml','.properties','.ino','.cpp','.h','.pde'} and i.file_size < 200000 and not any(x in p.parts for x in ['__MACOSX','javadoc','target','build']):
+                      if p.suffix.lower() in {'.java','.txt','.md','.csv','.ino','.cpp','.h','.pde'} and i.file_size < 200000 and not any(x in p.parts for x in ['__MACOSX','javadoc','target','build']):
                           report.append('\nFILE: ' + i.filename + '\n' + z.read(i).decode('utf-8', errors='replace'))
           for p in sorted(root.rglob('*.pdf')):
               text = subprocess.check_output(['pdftotext','-layout',str(p),'-']).decode('utf-8')
@@ -39,7 +41,7 @@ jobs:
           shutil.copytree(root/'Tema2', out/'Tema2')
           PY
       - name: Preserve inspection artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: original-materials-inspection
           path: inspection/

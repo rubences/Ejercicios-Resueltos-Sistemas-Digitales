@@ -1,0 +1,47 @@
+name: Direct repository launch
+on:
+  push:
+    branches: [main, feat/arranque-directo-repositorio]
+    paths: ['.devcontainer/**', '.vscode/**', 'docs/ARRANQUE_DIRECTO.md', '.github/workflows/direct-launch.yml']
+  pull_request:
+    branches: [main]
+    paths: ['.devcontainer/**', '.vscode/**', 'docs/ARRANQUE_DIRECTO.md', '.github/workflows/direct-launch.yml']
+permissions:
+  contents: read
+concurrency:
+  group: direct-launch-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Verify launch configuration
+        run: python3 .devcontainer/test_launch.py
+  browser-desktop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Install pinned Dev Containers CLI
+        run: npm install --global @devcontainers/cli@0.89.0
+      - name: Build and start the actual devcontainer
+        run: devcontainer up --workspace-folder .
+      - name: Test Java window, restart and browser transport
+        run: devcontainer exec --workspace-folder . python3 .devcontainer/smoke_test.py --web
+      - name: Run original Java checks and UI tests
+        run: |
+          devcontainer exec --workspace-folder . bash -lc 'cd laboratorio-java && java -Dfile.encoding=UTF-8 Build.java test'
+          devcontainer exec --workspace-folder . bash -lc 'cd laboratorio-java && java -Dfile.encoding=UTF-8 Build.java gui-test'
+      - name: Keep screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: direct-launch-evidence
+          path: laboratorio-java/build/screenshots/
+          retention-days: 14

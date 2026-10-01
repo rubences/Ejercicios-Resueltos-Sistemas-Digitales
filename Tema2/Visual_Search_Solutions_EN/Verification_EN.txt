@@ -1,0 +1,38 @@
+ENGLISH EDITION — VERIFICATION RECORD
+====================================================
+
+Scope: translation and packaging of the previously prepared Spanish solution guide and trace notebook.
+The numeric checks below compare this edition with the Spanish source; they are not a new independent proof of every search result.
+
+PASS · PDF page count: 55
+PASS · Page sizes preserved
+PASS · Every page preserves its numeric tokens
+PASS · No text outside PDF pages
+PASS · No replacement or black-square glyphs
+PASS · No residual Spanish prose in PDF (source identifiers retained)
+PASS · All original vector graphic objects retained
+PASS · PDF navigation link count preserved · 70 / 70
+PASS · All PDF internal links have valid targets
+PASS · Bookmark count preserved · 18
+PASS · HTML retains 13 traces and 171 extraction steps · 13 / 171
+PASS · HTML numeric tokens unchanged
+PASS · HTML internal anchors are valid
+PASS · HTML links point to the English PDF
+PASS · HTML loads no external resources
+PASS · HTML language is English
+PASS · No residual Spanish prose in HTML
+PASS · Verification data identical except translated event/action labels
+PASS · Editable text includes all 55 page sections
+PASS · No residual Spanish prose in editable text
+PASS · All 55 PDF pages rendered with pdftoppm
+
+VISUAL AND BROWSER CHECKS
+All 55 English PDF pages were rendered with pdftoppm. All pages were visually reviewed in contact sheets; dense tables, mixed-font explanations, diagrams and the DLS pseudocode were also inspected at larger size.
+Chromium: desktop anchor navigation, expanded REOPEN step, frontier and closed-state panels, and narrow-screen navigation passed. No page errors or external requests were observed. The narrow-screen page did not overflow its viewport.
+Browser limitation: this environment blocks file:// navigation. The same HTML bytes were loaded with set_content for rendering and interaction checks. Opening the local file by double-click was not verified in that browser environment.
+
+PRESERVATION CHECK
+The PDF has 55 pages, 70 valid internal links and 18 bookmarks. All original vector graphic objects and all per-page numeric tokens are retained. The HTML has the same 13 traces and 171 extraction steps. JSON data match the Spanish source after reversing the five documented label translations.
+
+OUTSIDE THIS TRANSLATION TASK
+An exhaustive new review of Unit1/Unit2/CourseIntroduction, new benchmark measurements, new algorithm implementations, and translation of the full AIMA textbook are outside scope. Original caveats and assumptions remain in the English content.
